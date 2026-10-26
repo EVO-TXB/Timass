@@ -11,9 +11,9 @@ spring:
       max-request-size: 10MB
 
   datasource:
-    url: jdbc:mysql://localhost:3307/timass_db?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Ho_Chi_Minh&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3307}/${DB_NAME:timass_db}?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Ho_Chi_Minh&allowPublicKeyRetrieval=true
     username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:nhotrinh1982}
+    password: ${DB_PASSWORD:}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -27,8 +27,8 @@ spring:
     open-in-view: false
 
 gemini:
-  api-key: ${GEMINI_API_KEY:AQ.Ab8RN6LMlV0FRMQqyfwajHAPnPQbTaFh7LgGp_e4GpLRh7ixvQ}
-  model: ${GEMINI_MODEL:gemini-3.5-flash}
+  api-key: ${GEMINI_API_KEY:}
+  model: ${GEMINI_MODEL:gemini-1.5-flash}
   base-url: https://generativelanguage.googleapis.com/v1beta/models
 
 logging:

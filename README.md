@@ -7,16 +7,17 @@
 ## 📑 Mục Lục
 1. [Công Nghệ Sử Dụng](#-công-nghệ-sử-dụng)
 2. [Yêu Cầu Môi Trường (Prerequisites)](#-yêu-cầu-môi-trường-prerequisites)
-3. [Hướng Dẫn Cài Đặt & Chạy Từng Bước](#-hướng-dẫn-cài-đặt--chạy-từng-bước)
+3. [⚡ Khởi Chạy Nhanh Bằng 1 Lệnh (One-Command Run)](#-khởi-chạy-nhanh-bằng-1-lệnh-one-command-run)
+4. [Hướng Dẫn Cài Đặt & Chạy Từng Bước](#-hướng-dẫn-cài-đặt--chạy-từng-bước)
    - [Bước 1: Khởi tạo Cơ sở dữ liệu MySQL](#bước-1-khởi-tạo-cơ-sở-dữ-liệu-mysql)
-   - [Bước 2: Cấu hình Backend](#bước-2-cấu-hình-backend)
+   - [Bước 2: Cấu hình Môi trường (.env)](#bước-2-cấu-hình-môi-trường-env)
    - [Bước 3: Khởi chạy Backend (Spring Boot)](#bước-3-khởi-chạy-backend-spring-boot)
    - [Bước 4: Cài đặt và Khởi chạy Frontend (React + Vite)](#bước-4-cài-đặt-và-khởi-chạy-frontend-react--vite)
    - [Bước 5: Truy cập và Sử dụng Ứng dụng](#bước-5-truy-cập-và-sử-dụng-ứng-dụng)
-4. [Các Tính Năng Nổi Bật & Hướng Dẫn Kiểm Thử](#-các-tính-năng-nổi-bật--hướng-dẫn-kiểm-thử)
-5. [Danh Sách API Chính (Backend REST APIs)](#-danh-sách-api-chính-backend-rest-apis)
-6. [Cấu Trúc Thư Mục Dự Án](#-cấu-trúc-thư-mục-dự-án)
-7. [Khắc Phục Lỗi Thường Gặp (Troubleshooting)](#-khắc-phục-lỗi-thường-gặp-troubleshooting)
+5. [Các Tính Năng Nổi Bật & Hướng Dẫn Kiểm Thử](#-các-tính-năng-nổi-bật--hướng-dẫn-kiểm-thử)
+6. [Danh Sách API Chính (Backend REST APIs)](#-danh-sách-api-chính-backend-rest-apis)
+7. [Cấu Trúc Thư Mục Dự Án](#-cấu-trúc-thư-mục-dự-án)
+8. [Khắc Phục Lỗi Thường Gặp (Troubleshooting)](#-khắc-phục-lỗi-thường-gặp-troubleshooting)
 
 ---
 
@@ -52,7 +53,26 @@ Trước khi bắt đầu, hãy đảm bảo máy tính của bạn đã cài đ
 
 ---
 
-## 🚀 Hướng Dẫn Cài Đặt & Chạy Từng Bước
+## ⚡ Khởi Chạy Nhanh Bằng 1 Lệnh (One-Command Run)
+
+Dự án đã tích hợp sẵn script tự động khởi chạy đồng thời cả **Backend (Spring Boot)** và **Frontend (React)**:
+
+### 🔹 Trên Windows:
+Chạy script bằng 1 lệnh duy nhất trong PowerShell hoặc CMD:
+```powershell
+.\run.bat
+```
+*(Nếu chưa có file `.env`, script sẽ tự động tạo từ `.env.example` và mở trình duyệt `http://localhost:5173` khi hoàn tất).*
+
+### 🔹 Trên Linux / macOS:
+```bash
+chmod +x run.sh
+./run.sh
+```
+
+---
+
+## 🚀 Hướng Dẫn Cài Đặt & Chạy Chi Tiết (Manual Setup)
 
 ### Bước 1: Khởi tạo Cơ sở dữ liệu MySQL
 
@@ -74,25 +94,29 @@ mysql -u root -p -P 3307 --default-character-set=utf8mb4 < seed-data.sql
 
 ---
 
-### Bước 2: Cấu hình Backend
+### Bước 2: Cấu hình Môi trường (.env)
 
-Kiểm tra và cập nhật file cấu hình [`backend/src/main/resources/application.yml`](./backend/src/main/resources/application.yml) nếu cổng hoặc mật khẩu MySQL của bạn khác cấu hình mặc định:
+Dự án cung cấp file mẫu cấu hình môi trường [`.env.example`](./.env.example). Tạo file `.env` từ file mẫu:
 
-```yaml
-server:
-  port: 8080
+```bash
+# Windows
+copy .env.example .env
 
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3307/timass_db?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Ho_Chi_Minh&allowPublicKeyRetrieval=true
-    username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:nhotrinh1982} # Đổi thành mật khẩu MySQL trên máy của bạn
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-gemini:
-  api-key: ${GEMINI_API_KEY:} # Thêm API key nếu muốn sử dụng tính năng quét ảnh TKB bằng AI
-  model: ${GEMINI_MODEL:gemini-1.5-flash}
+# Linux / macOS
+cp .env.example .env
 ```
+
+Điền mật khẩu MySQL và API Key Google Gemini (nếu có) vào `.env`:
+```env
+DB_HOST=localhost
+DB_PORT=3307
+DB_NAME=timass_db
+DB_USERNAME=root
+DB_PASSWORD=your_mysql_password_here
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+> **Lưu ý bảo mật:** File `.env` chứa thông tin nhạy cảm đã được cấu hình trong `.gitignore` để **tuyệt đối không bị commit lên GitHub**. Backend sẽ tự động đọc từ biến môi trường của hệ thống hoặc file cấu hình [`backend/src/main/resources/application.yml`](./backend/src/main/resources/application.yml).
 
 ---
 

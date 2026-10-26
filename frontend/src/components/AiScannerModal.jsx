@@ -48,7 +48,7 @@ export default function AiScannerModal({
   const [scanSource, setScanSource] = useState(''); // 'backend-gemini-ai' | 'client-gemini-vision' | 'mock-sample-ui'
 
   // Quản lý Gemini API Key
-  const [apiKey, setApiKey] = useState(() => localStorage.getItem('gemini_api_key') || 'AQ.Ab8RN6LMlV0FRMQqyfwajHAPnPQbTaFh7LgGp_e4GpLRh7ixvQ');
+  const [apiKey, setApiKey] = useState(() => localStorage.getItem('gemini_api_key') || import.meta.env.VITE_GEMINI_API_KEY || '');
   const [showApiKey, setShowApiKey] = useState(false);
   const [isKeyConfigOpen, setIsKeyConfigOpen] = useState(false);
 
