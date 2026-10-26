@@ -13,11 +13,16 @@ if not exist ".env" (
     echo.
 )
 
+:: Nạp các biến môi trường từ file .env vào phiên làm việc
+for /f "usebackq eol=# tokens=1* delims==" %%A in (".env") do (
+    set "%%A=%%B"
+)
+
 echo [1/2] Đang khởi chạy Backend (Spring Boot trên cổng 8080)...
-start "Timass Backend" cmd /k "cd backend && mvn spring-boot:run"
+start "Timass Backend" cmd /k "cd /d "%~dp0backend" && mvn spring-boot:run"
 
 echo [2/2] Đang khởi chạy Frontend (React + Vite trên cổng 5173)...
-start "Timass Frontend" cmd /k "cd frontend && npm run dev"
+start "Timass Frontend" cmd /k "cd /d "%~dp0frontend" && npm run dev"
 
 echo.
 echo ========================================================
