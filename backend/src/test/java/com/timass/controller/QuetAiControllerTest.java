@@ -55,7 +55,7 @@ class QuetAiControllerTest {
         MonHocTkbDTO monHoc = new MonHocTkbDTO("Mạng máy tính", "Thứ 3", "07:00", "09:30", "B301");
         List<MonHocTkbDTO> resultList = Collections.singletonList(monHoc);
 
-        when(quetAiService.trichXuatTkbTuAnh(any())).thenReturn(resultList);
+        when(quetAiService.trichXuatTkbTuAnh(any(), any())).thenReturn(resultList);
 
         mockMvc.perform(multipart("/api/v1/ai/quet-tkb").file(file))
                 .andExpect(status().isOk())
@@ -75,7 +75,7 @@ class QuetAiControllerTest {
                 new byte[]{1, 2, 3}
         );
 
-        when(quetAiService.trichXuatTkbTuAnh(any()))
+        when(quetAiService.trichXuatTkbTuAnh(any(), any()))
                 .thenThrow(new IllegalArgumentException("Không nhận diện được thời khóa biểu trong ảnh, vui lòng chụp rõ nét hơn hoặc thử lại"));
 
         mockMvc.perform(multipart("/api/v1/ai/quet-tkb").file(file))
